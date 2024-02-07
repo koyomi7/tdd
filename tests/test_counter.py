@@ -95,6 +95,13 @@ class CounterTest(TestCase):
         result = self.client.get('/counters/foo_delete')
         self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_delete_non_existent_counter(self):
+        """It should return 404 for non-existent counter"""
+        # Make a call to Delete a counter that does not exist
+        result = self.client.delete('/counters/non_existent_counter')
+        # Ensure that it returned a 404 return code
+        self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_setUp(self):
         """It should set up a test client"""
         self.setUp()
