@@ -80,6 +80,20 @@ class CounterTest(TestCase):
         result = self.client.get('/counters/nonexistent')
         # Ensure that it returned a 404 Not Found status code
         self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
+    
+    def test_delete_a_counter(self):
+        """It should delete a counter"""
+        # Make a call to Create a counter
+        result = self.client.post('/counters/foo_delete')
+        # Ensure that it returned a successful return code
+        self.assertEqual(result.status_code, status.HTTP_201_CREATED)
+        # Make a call to Delete the counter that you just created
+        result = self.client.delete('/counters/foo_delete')
+        # Ensure that it returned a successful return code
+        self.assertEqual(result.status_code, status.HTTP_204_NO_CONTENT)
+        # Check that the counter no longer exists
+        result = self.client.get('/counters/foo_delete')
+        self.assertEqual(result.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_setUp(self):
         """It should set up a test client"""
