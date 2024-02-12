@@ -28,3 +28,16 @@ jobs:
 
       - name: Run unit tests with nose
         run: nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
+
+      - name: Run static code analysis with Bandit
+        run: bandit -r app
+
+      - name: Run vulnerability scanning with Safety
+        run: |
+          pip install safety
+          safety check --full-report
+
+      - name: Publish test coverage report
+        uses: actions/upload-sarif@v1
+        with:
+          sarif_file: './.coverage/pylint-report.sarif'
