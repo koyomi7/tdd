@@ -36,8 +36,3 @@ jobs:
         run: |
           pip install safety
           safety check --full-report
-
-      - name: Publish test coverage report
-        uses: actions/upload-sarif@v1
-        with:
-          sarif_file: './.coverage/pylint-report.sarif'
